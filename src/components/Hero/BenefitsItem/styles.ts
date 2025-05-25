@@ -1,50 +1,43 @@
 import styled from "styled-components";
 
 export const BenefitsItemContainer = styled.li`
-    display: flex;
-    align-items: center;
-    gap: 0.66rem;
-    width: 100%;
-    p {
-      color: ${({ theme }) => theme.colors.base["base-text"]};
-      font-size: ${({ theme }) => theme.typography.roboto.texts.m.size};
-      font-weight: ${({ theme }) => theme.typography.roboto.texts.m.weight};
-      line-height: ${({ theme }) => theme.typography.roboto.texts.m["line-height"]};
-    }
+  display: flex;
+  align-items: center;
+  gap: 0.66rem;
+  width: 100%;
 
-    span {
+  span {
     border-radius: 100%;
     padding: 0.5rem;
     width: 2rem;
     height: 2rem;
-      svg {
-        fill: ${({ theme }) => theme.colors.base.background};
-      }
+    svg {
+      fill: ${({ theme }) => theme.colors.background};
     }
+  }
 
-    &.coffee {
-      grid-area: coffee;
-      span {
-        background-color: ${({ theme }) => theme.colors.product.purple};
-      }
+  &.coffee {
+    grid-area: coffee;
+    span {
+      background-color: ${({ theme }) => theme.colors.purple};
     }
-    &.package {
-      grid-area: package;
-      span {
-        background-color: ${({ theme }) => theme.colors.base["base-text"]};
-      }
+  }
+  &.package {
+    grid-area: package;
+    span {
+      background-color: ${({ theme }) => theme.colors["base-text"]};
     }
-    &.timer {
-      grid-area: timer;
-      span {
-        background-color: ${({ theme }) => theme.colors.product.yellow};
-      }
+  }
+  &.timer {
+    grid-area: timer;
+    span {
+      background-color: ${({ theme }) => theme.colors.yellow};
     }
-    &.shopping {
-      grid-area: shopping;
-      span {
-        background-color: ${({ theme }) => theme.colors.product["yellow-dark"]};
-      }
+  }
+  &.shopping {
+    grid-area: shopping;
+    span {
+      background-color: ${({ theme }) => theme.colors["yellow-dark"]};
     }
-   
-`
+  }
+`;

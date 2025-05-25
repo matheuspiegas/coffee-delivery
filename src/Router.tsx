@@ -1,8 +1,8 @@
-import { Routes, Route } from 'react-router-dom'
-import { SuccessPage } from './pages/Success'
-import { CheckoutPage } from './pages/Checkout'
-import { DefaultLayout } from './layouts/DefaultLayout'
-import { HomePage } from './pages/Home'
+import { Routes, Route } from "react-router-dom";
+import { SuccessPage } from "./pages/Success";
+import { CheckoutPage } from "./pages/Checkout";
+import { DefaultLayout } from "./layouts/DefaultLayout";
+import { HomePage } from "./pages/Home";
 
 export function Router() {
   return (
@@ -13,5 +13,5 @@ export function Router() {
         <Route path="/checkout" element={<CheckoutPage />} />
       </Route>
     </Routes>
-  )
+  );
 }

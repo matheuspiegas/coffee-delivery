@@ -6,5 +6,5 @@ export function Cart() {
     <CartButton>
       <ShoppingCartIcon weight="fill" size={22} />
     </CartButton>
-  )
+  );
 }
