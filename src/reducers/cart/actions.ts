@@ -1,3 +1,4 @@
+import type { FormInputs } from "../../pages/Checkout";
 import type { Item } from "./reducer";
 
 export enum ActionTypes {
@@ -5,6 +6,7 @@ export enum ActionTypes {
   REMOVE_COFFEE_FROM_CART = "REMOVE_COFFEE_FROM_CART",
   INCREMENT_COFFEE_QUANTITY = "INCREMENT_COFFEE_QUANTITY",
   DECREMENT_COFFEE_QUANTITY = "DECREMENT_COFFEE_QUANTITY",
+  CHECKOUT = "CHECKOUT",
 }
 
 export type Action =
@@ -14,7 +16,8 @@ export type Action =
       payload: Item;
     }
   | { type: ActionTypes.INCREMENT_COFFEE_QUANTITY; payload: { id: string } }
-  | { type: ActionTypes.DECREMENT_COFFEE_QUANTITY; payload: { id: string } };
+  | { type: ActionTypes.DECREMENT_COFFEE_QUANTITY; payload: { id: string } }
+  | { type: ActionTypes.CHECKOUT; payload: FormInputs };
 
 export function addNewCoffeeInCartAction(item: Item) {
   return {
@@ -39,5 +42,11 @@ export function incrementCoffeeFromCartAction(id: string) {
   return {
     type: ActionTypes.INCREMENT_COFFEE_QUANTITY,
     payload: { id },
+  } as const;
+}
+export function checkoutOrderData(data: FormInputs) {
+  return {
+    type: ActionTypes.CHECKOUT,
+    payload: data,
   } as const;
 }

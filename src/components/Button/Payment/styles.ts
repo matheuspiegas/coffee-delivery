@@ -20,6 +20,11 @@ export const Container = styled.button<ContainerProps>`
   text-transform: uppercase;
   border: 1px solid transparent;
 
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
   ${({ error }) => css`
     border-color: ${error ? "red" : ""};
   `}

@@ -16,4 +16,8 @@ export const ButtonContainer = styled.button`
     background: ${({ theme }) => theme.colors["yellow-dark"]};
     cursor: pointer;
   }
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 `;

@@ -23,11 +23,14 @@ export const InputWrapper = styled.label<InputWrapperProps>`
     border: 0;
     outline: none;
     width: 100%;
-    font-size: ${({ theme }) => theme.sizes["text-regular-s"]};
     color: ${({ theme }) => theme.colors["base-text"]};
 
     &::placeholder {
       color: ${({ theme }) => theme.colors["base-label"]};
+    }
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
     }
   }
 

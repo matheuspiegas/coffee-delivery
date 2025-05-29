@@ -9,6 +9,13 @@ export const HeroContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-inline: 1rem;
+
+  @media (width < 1000px) {
+    align-items: start;
+    height: auto;
+    margin-bottom: 5rem;
+  }
 `;
 
 export const HeroContent = styled.div`
@@ -16,6 +23,12 @@ export const HeroContent = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 3.5rem;
+
+  @media (width < 1000px) {
+    img {
+      display: none;
+    }
+  }
 `;
 
 export const HeroHeadingContainer = styled.div`
@@ -35,11 +48,8 @@ export const BenefitsSection = styled.ul`
   margin-top: 4.125rem;
 
   @media (max-width: 1024px) {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "shopping"
-      "package"
-      "timer"
-      "coffee";
+    grid-template-columns: auto;
+    justify-content: start;
+    column-gap: 1rem;
   }
 `;

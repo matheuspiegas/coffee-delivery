@@ -7,12 +7,9 @@ export const HeaderContainer = styled.header`
   z-index: 5;
   background: ${({ theme }) => theme.colors.background};
   > div {
-    padding: 2rem 0;
+    padding: 2rem 1rem;
     display: flex;
     justify-content: space-between;
-  }
-  @media (max-width: 768px) {
-    padding: 2rem 1rem;
   }
 `;
 

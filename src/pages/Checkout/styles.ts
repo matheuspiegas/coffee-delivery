@@ -5,6 +5,11 @@ export const Container = styled.main`
   margin: 2.5rem 0;
   display: flex;
   gap: 2rem;
+  @media (width < 1120px) {
+    flex-direction: column;
+    padding-inline: 1rem;
+    margin-top: 0;
+  }
 `;
 
 export const PersonalInfoContainer = styled.section`
@@ -30,6 +35,17 @@ export const AddressContainer = styled.div`
       "bairro cidade uf";
     flex-direction: column;
     gap: 1rem;
+    @media (width < 420px) {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "cep"
+        "rua"
+        "numero"
+        "complemento"
+        "bairro"
+        "cidade"
+        "uf";
+    }
   }
 `;
 
@@ -43,6 +59,12 @@ export const PaymentContainer = styled.div`
 `;
 export const RadioPaymentOptionsContainer = styled(RadioGroup.Root)`
   display: flex;
+  flex-wrap: wrap;
+  @media (width < 485px) {
+    button {
+      width: 100%;
+    }
+  }
   gap: 0.75rem;
 `;
 

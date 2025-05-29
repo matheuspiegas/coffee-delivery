@@ -1,11 +1,13 @@
 import { createContext, useEffect, useReducer, type ReactNode } from "react";
 import {
   addNewCoffeeInCartAction,
+  checkoutOrderData,
   decrementCoffeeFromCartAction,
   incrementCoffeeFromCartAction,
   removeCoffeeFromCartAction,
 } from "../reducers/cart/actions";
 import { cartReducer, type Item } from "../reducers/cart/reducer";
+import type { FormInputs } from "../pages/Checkout";
 
 interface CartContext {
   cart: Item[];
@@ -14,6 +16,7 @@ interface CartContext {
   handleRemoveCoffeeFromCart: (id: string) => void;
   handleIncrementCoffeeQuantity: (id: string) => void;
   handleDecrementCoffeeQuantity: (id: string) => void;
+  handleCheckout: (data: FormInputs) => void;
 }
 
 interface CartProviderProps {
@@ -59,8 +62,13 @@ export function CartProvider({ children }: CartProviderProps) {
   function handleIncrementCoffeeQuantity(id: string) {
     dispatch(incrementCoffeeFromCartAction(id));
   }
+
   function handleDecrementCoffeeQuantity(id: string) {
     dispatch(decrementCoffeeFromCartAction(id));
+  }
+
+  function handleCheckout(data: FormInputs) {
+    dispatch(checkoutOrderData(data));
   }
 
   return (
@@ -71,6 +79,7 @@ export function CartProvider({ children }: CartProviderProps) {
         handleRemoveCoffeeFromCart,
         handleIncrementCoffeeQuantity,
         handleDecrementCoffeeQuantity,
+        handleCheckout,
         quantityOfItemsInCart,
       }}
     >

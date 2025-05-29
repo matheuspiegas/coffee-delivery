@@ -3,9 +3,12 @@ import { CartButton } from "../../../../components/Button/Cart";
 import { QuantityButton } from "../../../../components/Button/Quantity";
 import { RegularText, TitleText } from "../../../../components/Typography";
 import {
+  ActionsContainer,
   CoffeeCardContainer,
+  CoffeeCardContent,
   FooterContainer,
   HeadingContainer,
+  PriceContainer,
   TagsContainer,
 } from "./styles";
 import { CartContext } from "../../../../contexts/CartContext";
@@ -45,31 +48,39 @@ export function CoffeeCard(coffee: CoffeeCardProps) {
         })}
       </TagsContainer>
 
-      <HeadingContainer>
-        <TitleText size="s" color="subtitle" weight={700}>
-          {coffee.title}
-        </TitleText>
-        <RegularText color="label" size="s">
-          {coffee.description}
-        </RegularText>
-      </HeadingContainer>
+      <CoffeeCardContent>
+        <HeadingContainer>
+          <TitleText size="s" color="subtitle" weight={700}>
+            {coffee.title}
+          </TitleText>
+          <RegularText color="label" size="s">
+            {coffee.description}
+          </RegularText>
+        </HeadingContainer>
 
-      <FooterContainer>
-        <TitleText color="text">
-          {Intl.NumberFormat("pt-BR", {
-            style: "currency",
-            currency: "BRL",
-          }).format(coffee.price)}
-        </TitleText>
-        <div>
-          <QuantityButton
-            quantity={quantity}
-            decrementQuantity={decrementQuantity}
-            incrementQuantity={incrementQuantity}
-          />
-          <CartButton onClick={handleAdd} />
-        </div>
-      </FooterContainer>
+        <FooterContainer>
+          <PriceContainer>
+            <RegularText size="s" color="text">
+              R$
+            </RegularText>
+            <TitleText color="text">
+              {Intl.NumberFormat("pt-BR", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              }).format(coffee.price)}
+            </TitleText>
+          </PriceContainer>
+
+          <ActionsContainer>
+            <QuantityButton
+              quantity={quantity}
+              decrementQuantity={decrementQuantity}
+              incrementQuantity={incrementQuantity}
+            />
+            <CartButton onClick={handleAdd} />
+          </ActionsContainer>
+        </FooterContainer>
+      </CoffeeCardContent>
     </CoffeeCardContainer>
   );
 }

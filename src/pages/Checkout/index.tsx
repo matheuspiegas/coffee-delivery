@@ -39,15 +39,15 @@ const newOrder = z.object({
   complemento: z.string().optional(),
   bairro: z.string().min(1, "Bairro é obrigatório"),
   cidade: z.string().min(1, "Cidade é obrigatória"),
-  uf: z.string().min(2).max(2, "UF deve ter 2 caracteres"),
+  uf: z.string().min(2, "UF deve ter 2 caracteres"),
   paymentMethod: z.string().min(1, "Forma de pagamento é obrigatória"),
 });
 
-type FormInputs = z.infer<typeof newOrder>;
+export type FormInputs = z.infer<typeof newOrder>;
 
 export function CheckoutPage() {
   const { colors } = useTheme();
-  const { cart } = useContext(CartContext);
+  const { cart, handleCheckout } = useContext(CartContext);
 
   const shippingCost = 3.5;
 
@@ -55,22 +55,21 @@ export function CheckoutPage() {
     return acc + item.price * item.quantity;
   }, 0);
 
-  console.log("orderTotal", orderTotal);
-
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     control,
   } = useForm<FormInputs>({
     resolver: zodResolver(newOrder),
   });
 
-  console.log(errors);
-  function onSubmit(data: FormInputs) {
-    console.log(data);
+  async function onSubmit(data: FormInputs) {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    handleCheckout(data);
+    navigate("/success");
   }
 
   return (
@@ -96,6 +95,8 @@ export function CheckoutPage() {
             <Input
               placeholder="CEP"
               required
+              disabled={isSubmitting}
+              inputMode="numeric"
               error={!!errors?.cep}
               containerProps={{ style: { gridArea: "cep" } }}
               {...register("cep", { valueAsNumber: true })}
@@ -103,6 +104,7 @@ export function CheckoutPage() {
             <Input
               placeholder="Rua"
               required
+              disabled={isSubmitting}
               error={!!errors?.rua}
               containerProps={{ style: { gridArea: "rua" } }}
               {...register("rua")}
@@ -111,11 +113,14 @@ export function CheckoutPage() {
               placeholder="Número"
               error={!!errors?.numero}
               required
+              disabled={isSubmitting}
+              inputMode="numeric"
               containerProps={{ style: { gridArea: "numero" } }}
               {...register("numero", { valueAsNumber: true })}
             />
             <Input
               placeholder="Complemento"
+              disabled={isSubmitting}
               error={!!errors?.complemento}
               containerProps={{ style: { gridArea: "complemento" } }}
               {...register("complemento")}
@@ -123,6 +128,7 @@ export function CheckoutPage() {
             <Input
               placeholder="Bairro"
               required
+              disabled={isSubmitting}
               error={!!errors?.bairro}
               containerProps={{ style: { gridArea: "bairro" } }}
               {...register("bairro")}
@@ -130,6 +136,7 @@ export function CheckoutPage() {
             <Input
               placeholder="Cidade"
               required
+              disabled={isSubmitting}
               error={!!errors?.cidade}
               containerProps={{ style: { gridArea: "cidade" } }}
               {...register("cidade")}
@@ -137,6 +144,7 @@ export function CheckoutPage() {
             <Input
               placeholder="UF"
               required
+              disabled={isSubmitting}
               error={!!errors?.uf}
               containerProps={{ style: { gridArea: "uf" } }}
               {...register("uf")}
@@ -160,19 +168,28 @@ export function CheckoutPage() {
                 onValueChange={field.onChange}
               >
                 <RadioGroup.Item value="creditCard" asChild>
-                  <PaymentButton error={!!errors.paymentMethod}>
+                  <PaymentButton
+                    error={!!errors.paymentMethod}
+                    disabled={isSubmitting}
+                  >
                     <CreditCardIcon size={16} />
                     Cartão de crédito
                   </PaymentButton>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="debitCard" asChild>
-                  <PaymentButton error={!!errors.paymentMethod}>
+                  <PaymentButton
+                    error={!!errors.paymentMethod}
+                    disabled={isSubmitting}
+                  >
                     <BankIcon size={16} />
                     Cartão de débito
                   </PaymentButton>
                 </RadioGroup.Item>
                 <RadioGroup.Item value="money" asChild>
-                  <PaymentButton error={!!errors.paymentMethod}>
+                  <PaymentButton
+                    error={!!errors.paymentMethod}
+                    disabled={isSubmitting}
+                  >
                     <MoneyIcon size={16} />
                     Dinheiro
                   </PaymentButton>
@@ -254,7 +271,11 @@ export function CheckoutPage() {
             </TotalContainer>
           )}
           {cart.length > 0 && (
-            <PrimaryButton type="submit" form="addressForm">
+            <PrimaryButton
+              type="submit"
+              form="addressForm"
+              disabled={isSubmitting}
+            >
               Confirmar Pedido
             </PrimaryButton>
           )}

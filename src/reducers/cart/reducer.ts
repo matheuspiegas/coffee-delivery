@@ -1,5 +1,6 @@
 import { produce } from "immer";
 import { ActionTypes, type Action } from "./actions";
+import type { FormInputs } from "../../pages/Checkout";
 
 export interface Item {
   id: string;
@@ -13,6 +14,7 @@ export interface Item {
 
 interface CartReducerState {
   items: Item[];
+  order: FormInputs;
 }
 
 export function cartReducer(state: CartReducerState, action: Action) {
@@ -71,6 +73,10 @@ export function cartReducer(state: CartReducerState, action: Action) {
             currentItem.quantity -= 1;
           }
         }
+      });
+    case ActionTypes.CHECKOUT:
+      return produce(state, (draft) => {
+        draft.order = action.payload;
       });
     default:
       return state;
