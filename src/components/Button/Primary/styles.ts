@@ -1,4 +1,13 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const spinner = keyframes`
+0% {
+  transform: rotate(0deg);
+}
+100% {
+  transform: rotate(360deg);
+}
+`;
 
 export const ButtonContainer = styled.button`
   background: ${({ theme }) => theme.colors.yellow};
@@ -16,8 +25,13 @@ export const ButtonContainer = styled.button`
     background: ${({ theme }) => theme.colors["yellow-dark"]};
     cursor: pointer;
   }
+
   &:disabled {
-    opacity: 0.3;
+    opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  svg {
+    animation: ${spinner} 1s linear infinite;
   }
 `;

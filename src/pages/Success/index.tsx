@@ -14,8 +14,16 @@ import {
 
 import incomingOrded from "../../assets/incoming-order.svg";
 import { RegularText, TitleText } from "../../components/Typography";
+import { useContext } from "react";
+import { CartContext } from "../../contexts/CartContext";
 
 export function SuccessPage() {
+  const { order } = useContext(CartContext);
+  const formattedOrder = {
+    money: "Dinheiro",
+    creditCard: "Cartão de crédito",
+    debitCard: "Cartão de débito",
+  };
   return (
     <Container className="container">
       <OrderContainer>
@@ -35,9 +43,12 @@ export function SuccessPage() {
                 <MapPinIcon weight="fill" />
               </span>
               <RegularText color="text">
-                Entrega em <strong>Rua João Daniel Martinelli, 102</strong>{" "}
+                Entrega em{" "}
+                <strong>
+                  {order.rua}, {order.numero}
+                </strong>{" "}
                 <br />
-                Farrapos - Porto Alegre, RS
+                {order.bairro} - {order.cidade}, {order.uf}
               </RegularText>
             </OrderInfoItem>
             <OrderInfoItem variant="yellow">
@@ -54,7 +65,13 @@ export function SuccessPage() {
               </span>
               <RegularText color="text">
                 Pagamento na entrega <br />
-                <strong>Cartão de Crédito</strong>
+                <strong>
+                  {
+                    formattedOrder[
+                      order.paymentMethod as keyof typeof formattedOrder
+                    ]
+                  }
+                </strong>
               </RegularText>
             </OrderInfoItem>
           </OrderInfoContent>

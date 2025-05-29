@@ -13,6 +13,7 @@ interface CardProps {
   price: number;
   image: string;
   quantity: number;
+  isLoading?: boolean;
 }
 
 export function Card(props: CardProps) {
@@ -39,10 +40,14 @@ export function Card(props: CardProps) {
         <div className="buttons">
           <QuantityButton
             quantity={props.quantity}
+            isLoading={props.isLoading}
             incrementQuantity={incrementQuantity}
             decrementQuantity={decrementQuantity}
           />
-          <SecondaryButton onClick={() => handleRemoveCoffeeFromCart(props.id)}>
+          <SecondaryButton
+            onClick={() => handleRemoveCoffeeFromCart(props.id)}
+            disabled={props.isLoading}
+          >
             Remover
           </SecondaryButton>
         </div>

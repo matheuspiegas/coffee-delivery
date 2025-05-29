@@ -21,7 +21,7 @@ export const QuantityButtonContainer = styled.div`
     align-items: center;
     &:disabled {
       cursor: not-allowed;
-      opacity: 0.2;
+      opacity: 0.5;
     }
   }
 `;

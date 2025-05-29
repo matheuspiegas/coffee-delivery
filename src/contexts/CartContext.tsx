@@ -11,6 +11,7 @@ import type { FormInputs } from "../pages/Checkout";
 
 interface CartContext {
   cart: Item[];
+  order: FormInputs;
   quantityOfItemsInCart: number;
   handleAddItemToCart: (item: Item) => void;
   handleRemoveCoffeeFromCart: (id: string) => void;
@@ -39,6 +40,8 @@ export function CartProvider({ children }: CartProviderProps) {
       return initialState;
     }
   );
+
+  console.log(cartState.order);
 
   let quantityOfItemsInCart = 0;
 
@@ -75,6 +78,7 @@ export function CartProvider({ children }: CartProviderProps) {
     <CartContext.Provider
       value={{
         cart: cartState.items,
+        order: cartState.order,
         handleAddItemToCart,
         handleRemoveCoffeeFromCart,
         handleIncrementCoffeeQuantity,

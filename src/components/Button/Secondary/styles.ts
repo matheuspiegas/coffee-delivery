@@ -27,4 +27,9 @@ export const ButtonContainer = styled.button`
       fill: ${({ theme }) => theme.colors["purple-dark"]};
     }
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;

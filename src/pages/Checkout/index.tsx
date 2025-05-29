@@ -2,6 +2,7 @@ import {
   CreditCardIcon,
   CurrencyDollarIcon,
   MoneyIcon,
+  SpinnerGapIcon,
 } from "@phosphor-icons/react";
 import { PaymentButton } from "../../components/Button/Payment";
 import {
@@ -224,6 +225,7 @@ export function CheckoutPage() {
               return (
                 <div key={coffee.id}>
                   <Card
+                    isLoading={isSubmitting}
                     quantity={coffee.quantity}
                     image={coffee.image}
                     title={coffee.title}
@@ -274,9 +276,9 @@ export function CheckoutPage() {
             <PrimaryButton
               type="submit"
               form="addressForm"
-              disabled={isSubmitting}
+              isLoading={isSubmitting}
             >
-              Confirmar Pedido
+              {isSubmitting ? <SpinnerGapIcon size={16} /> : "Confirmar Pedido"}
             </PrimaryButton>
           )}
         </SelectedCoffeesContent>
