@@ -1,7 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 interface InputWrapperProps {
   isFocused: boolean;
+  error: boolean;
 }
 
 export const InputWrapper = styled.label<InputWrapperProps>`
@@ -13,6 +14,9 @@ export const InputWrapper = styled.label<InputWrapperProps>`
     ${({ theme, isFocused }) =>
       isFocused ? theme.colors["yellow-dark"] : theme.colors["base-button"]};
 
+  ${({ error }) => css`
+    border-color: ${error ? "red" : ""};
+  `}
   input {
     background: transparent;
     padding: 0.75rem;

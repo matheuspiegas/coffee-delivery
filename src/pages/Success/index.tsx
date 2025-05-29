@@ -13,14 +13,19 @@ import {
 } from "./styles";
 
 import incomingOrded from "../../assets/incoming-order.svg";
+import { RegularText, TitleText } from "../../components/Typography";
 
 export function SuccessPage() {
   return (
-    <Container>
+    <Container className="container">
       <OrderContainer>
         <HeadingContainer>
-          <h1>Uhu! Pedido confirmado</h1>
-          <p>Agora é só aguardar que logo o café chegará até você</p>
+          <TitleText size="l" color="text">
+            Uhu! Pedido confirmado
+          </TitleText>
+          <RegularText size="l" color="subtitle">
+            Agora é só aguardar que logo o café chegará até você
+          </RegularText>
         </HeadingContainer>
 
         <OrderInfoContainer>
@@ -29,27 +34,28 @@ export function SuccessPage() {
               <span>
                 <MapPinIcon weight="fill" />
               </span>
-              <p>
-                Entrega em Rua João Daniel Martinelli, 102 Farrapos - Porto
-                Alegre, RS
-              </p>
+              <RegularText color="text">
+                Entrega em <strong>Rua João Daniel Martinelli, 102</strong>{" "}
+                <br />
+                Farrapos - Porto Alegre, RS
+              </RegularText>
             </OrderInfoItem>
             <OrderInfoItem variant="yellow">
               <span>
                 <TimerIcon weight="fill" />
               </span>
-              <p>
-                Previsão de entrega <strong>20 min - 30 min</strong>
-              </p>
+              <RegularText color="text">
+                Previsão de entrega <br /> <strong>20 min - 30 min</strong>
+              </RegularText>
             </OrderInfoItem>
             <OrderInfoItem variant="yellow-dark">
               <span>
                 <CurrencyDollarSimpleIcon weight="fill" />
               </span>
-              <p>
+              <RegularText color="text">
                 Pagamento na entrega <br />
-                Cartão de Crédito
-              </p>
+                <strong>Cartão de Crédito</strong>
+              </RegularText>
             </OrderInfoItem>
           </OrderInfoContent>
         </OrderInfoContainer>

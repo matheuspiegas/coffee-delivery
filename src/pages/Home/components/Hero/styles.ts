@@ -1,30 +1,27 @@
 import styled from "styled-components";
-import background from "../../assets/Background.png";
+import background from "../../../../assets/Background.png";
 
 export const HeroContainer = styled.div`
+  width: 100%;
+  height: 34rem;
   background: url(${background}) no-repeat center;
   background-size: cover;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  height: 34rem;
-  overflow: hidden;
-  padding-inline: 10rem;
-  padding-top: 5.875rem;
   display: flex;
-  gap: 56px;
+  align-items: center;
+  justify-content: center;
+`;
 
-  img {
-    width: 476px;
-  }
+export const HeroContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3.5rem;
+`;
 
-  @media (max-width: 768px) {
-    padding: 1rem;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+export const HeroHeadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const BenefitsSection = styled.ul`

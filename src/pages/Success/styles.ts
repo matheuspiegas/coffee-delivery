@@ -2,10 +2,8 @@ import styled, { css } from "styled-components";
 
 export const Container = styled.main`
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   margin: 5rem auto 5rem auto;
-  max-width: 70rem;
   gap: 6.375rem;
   align-items: end;
 `;
@@ -14,19 +12,7 @@ export const HeadingContainer = styled.div`
   display: flex;
   flex-direction: column;
   h1 {
-    color: ${({ theme }) => theme.colors.product["yellow-dark"]};
-    font-family: ${({ theme }) => theme.typography.baloo2["font-family"]};
-    font-size: ${({ theme }) => theme.typography.baloo2.titles.l.size};
-    font-weight: ${({ theme }) => theme.typography.baloo2.titles.l.weight};
-    line-height: ${({ theme }) =>
-      theme.typography.baloo2.titles.l["line-height"]};
-  }
-  p {
-    font-size: ${({ theme }) => theme.typography.roboto.texts.l.size};
-    font-weight: ${({ theme }) => theme.typography.roboto.texts.l.weight};
-    line-height: ${({ theme }) =>
-      theme.typography.roboto.texts.l["line-height"]};
-    color: ${({ theme }) => theme.colors.base["base-subtitle"]};
+    color: ${({ theme }) => theme.colors["yellow-dark"]};
   }
 `;
 
@@ -43,7 +29,7 @@ export const OrderInfoContainer = styled.div`
   border-color: transparent;
   background-origin: border-box;
   background-image: ${({ theme }) => css`
-    linear-gradient(to bottom right, ${theme.colors.product.yellow}, ${theme.colors.product.purple})
+    linear-gradient(to bottom right, ${theme.colors.yellow}, ${theme.colors.purple})
   `};
 `;
 
@@ -71,24 +57,29 @@ export const OrderInfoItem = styled.div<OrderInfoItemProps>`
     justify-content: center;
     align-items: center;
     border-radius: 100%;
-    ${(props) => css`
-      background-color: ${props.variant === "purple"
-        ? props.theme.colors.product.purple
-        : props.variant === "yellow"
-          ? props.theme.colors.product.yellow
-          : props.theme.colors.product["yellow-dark"]};
-    `}
+    ${(props) => {
+      switch (props.variant) {
+        case "purple":
+          return css`
+            background-color: ${props.theme.colors.purple};
+          `;
+        case "yellow":
+          return css`
+            background-color: ${props.theme.colors.yellow};
+          `;
+        case "yellow-dark":
+          return css`
+            background-color: ${props.theme.colors["yellow-dark"]};
+          `;
+        default:
+          return css`
+            background-color: ${props.theme.colors["yellow-dark"]};
+          `;
+      }
+    }}
 
     > svg {
       fill: white;
     }
-  }
-  > p {
-    max-width: 22.125rem;
-    font-size: ${({ theme }) => theme.typography.roboto.texts.m.size};
-    font-weight: ${({ theme }) => theme.typography.roboto.texts.m.weight};
-    line-height: ${({ theme }) =>
-      theme.typography.roboto.texts.m["line-height"]};
-    color: ${({ theme }) => theme.colors.base["base-subtitle"]};
   }
 `;

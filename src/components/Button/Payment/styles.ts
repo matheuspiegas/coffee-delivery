@@ -1,6 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const Container = styled.button`
+interface ContainerProps {
+  error: boolean;
+}
+
+export const Container = styled.button<ContainerProps>`
   background: ${({ theme }) => theme.colors["base-button"]};
   display: flex;
   justify-content: start;
@@ -15,6 +19,10 @@ export const Container = styled.button`
   font-weight: 400;
   text-transform: uppercase;
   border: 1px solid transparent;
+
+  ${({ error }) => css`
+    border-color: ${error ? "red" : ""};
+  `}
 
   > svg {
     fill: ${({ theme }) => theme.colors.purple};

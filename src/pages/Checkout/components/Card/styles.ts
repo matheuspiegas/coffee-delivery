@@ -16,14 +16,14 @@ export const CardContainer = styled.div`
     display: flex;
     gap: 0.5rem;
   }
+`;
 
-  .coffeeInfo {
-    font-size: ${({ theme }) => theme.sizes["text-regular-m"]};
-    color: ${({ theme }) => theme.colors["base-subtitle"]};
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
+export const CardContent = styled.div`
+  font-size: ${({ theme }) => theme.sizes["text-regular-m"]};
+  color: ${({ theme }) => theme.colors["base-subtitle"]};
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 `;
 
 export const Price = styled.div`

@@ -1,19 +1,41 @@
-import { Hero } from "../../components/Hero";
-import { TitleContainer } from "../../components/Text/TitleText/styles";
-import { Coffees, CoffeesContainer, Heading } from "./styles";
+import { TitleText } from "../../components/Typography";
+import { Hero } from "./components/Hero";
+import {
+  CoffeesContainer,
+  CoffeesContent,
+  Heading,
+  HomeContainer,
+} from "./styles";
+import { coffees } from "../../../data.json";
+import { CoffeeCard } from "./components/CoffeeCard";
 
 export function HomePage() {
   return (
-    <>
+    <HomeContainer>
       <Hero />
-      <CoffeesContainer>
+
+      <CoffeesContainer className="container">
         <Heading>
-          <TitleContainer size="l" weight={800} color="subtitle">
+          <TitleText size="l" weight={800} color="subtitle">
             Nossos Cafés
-          </TitleContainer>
+          </TitleText>
         </Heading>
-        <Coffees></Coffees>
+        <CoffeesContent>
+          {coffees.map((coffee) => {
+            return (
+              <CoffeeCard
+                image={coffee.image}
+                description={coffee.description}
+                id={coffee.id}
+                price={coffee.price}
+                tags={coffee.tags}
+                title={coffee.title}
+                key={coffee.id}
+              />
+            );
+          })}
+        </CoffeesContent>
       </CoffeesContainer>
-    </>
+    </HomeContainer>
   );
 }
