@@ -20,9 +20,8 @@ import {
 } from "./styles";
 import * as RadioGroup from "@radix-ui/react-radio-group";
 import { BankIcon, MapPinLineIcon } from "@phosphor-icons/react/dist/ssr";
-import { Input } from "../../components/Input";
 import { PrimaryButton } from "../../components/Button/Primary";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Card } from "./components/Card";
@@ -32,6 +31,7 @@ import { useTheme } from "styled-components";
 import { useContext } from "react";
 import { CartContext } from "../../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
+import { AddressForm } from "./components/AddressForm";
 
 const newOrder = z.object({
   cep: z.number().min(8, "CEP deve ter 8 dígitos"),
@@ -48,7 +48,7 @@ export type FormInputs = z.infer<typeof newOrder>;
 
 export function CheckoutPage() {
   const { colors } = useTheme();
-  const { cart, handleCheckout } = useContext(CartContext);
+  const { cart } = useContext(CartContext);
 
   const shippingCost = 3.5;
 
@@ -58,20 +58,9 @@ export function CheckoutPage() {
 
   const navigate = useNavigate();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    control,
-  } = useForm<FormInputs>({
+  const methods = useForm<FormInputs>({
     resolver: zodResolver(newOrder),
   });
-
-  async function onSubmit(data: FormInputs) {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    handleCheckout(data);
-    navigate("/success");
-  }
 
   return (
     <Container className="container">
@@ -88,69 +77,9 @@ export function CheckoutPage() {
             title="Endereço de Entrega"
             subtitle="Informe o endereço onde deseja receber seu pedido"
           />
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="info"
-            id="addressForm"
-          >
-            <Input
-              placeholder="CEP"
-              required
-              disabled={isSubmitting}
-              inputMode="numeric"
-              error={!!errors?.cep}
-              containerProps={{ style: { gridArea: "cep" } }}
-              {...register("cep", { valueAsNumber: true })}
-            />
-            <Input
-              placeholder="Rua"
-              required
-              disabled={isSubmitting}
-              error={!!errors?.rua}
-              containerProps={{ style: { gridArea: "rua" } }}
-              {...register("rua")}
-            />
-            <Input
-              placeholder="Número"
-              error={!!errors?.numero}
-              required
-              disabled={isSubmitting}
-              inputMode="numeric"
-              containerProps={{ style: { gridArea: "numero" } }}
-              {...register("numero", { valueAsNumber: true })}
-            />
-            <Input
-              placeholder="Complemento"
-              disabled={isSubmitting}
-              error={!!errors?.complemento}
-              containerProps={{ style: { gridArea: "complemento" } }}
-              {...register("complemento")}
-            />
-            <Input
-              placeholder="Bairro"
-              required
-              disabled={isSubmitting}
-              error={!!errors?.bairro}
-              containerProps={{ style: { gridArea: "bairro" } }}
-              {...register("bairro")}
-            />
-            <Input
-              placeholder="Cidade"
-              required
-              disabled={isSubmitting}
-              error={!!errors?.cidade}
-              containerProps={{ style: { gridArea: "cidade" } }}
-              {...register("cidade")}
-            />
-            <Input
-              placeholder="UF"
-              required
-              disabled={isSubmitting}
-              error={!!errors?.uf}
-              containerProps={{ style: { gridArea: "uf" } }}
-              {...register("uf")}
-            />
-          </form>
+          <FormProvider {...methods}>
+            <AddressForm />
+          </FormProvider>
         </AddressContainer>
 
         {/* Forma de pagamento */}
@@ -162,7 +91,7 @@ export function CheckoutPage() {
           />
           <Controller
             name="paymentMethod"
-            control={control}
+            control={methods.control}
             render={({ field }) => (
               <RadioPaymentOptionsContainer
                 value={field.value}
@@ -170,8 +99,8 @@ export function CheckoutPage() {
               >
                 <RadioGroup.Item value="creditCard" asChild>
                   <PaymentButton
-                    error={!!errors.paymentMethod}
-                    disabled={isSubmitting}
+                    error={!!methods.formState.errors.paymentMethod}
+                    disabled={methods.formState.isSubmitting}
                   >
                     <CreditCardIcon size={16} />
                     Cartão de crédito
@@ -179,8 +108,8 @@ export function CheckoutPage() {
                 </RadioGroup.Item>
                 <RadioGroup.Item value="debitCard" asChild>
                   <PaymentButton
-                    error={!!errors.paymentMethod}
-                    disabled={isSubmitting}
+                    error={!!methods.formState.errors.paymentMethod}
+                    disabled={methods.formState.isSubmitting}
                   >
                     <BankIcon size={16} />
                     Cartão de débito
@@ -188,8 +117,8 @@ export function CheckoutPage() {
                 </RadioGroup.Item>
                 <RadioGroup.Item value="money" asChild>
                   <PaymentButton
-                    error={!!errors.paymentMethod}
-                    disabled={isSubmitting}
+                    error={!!methods.formState.errors.paymentMethod}
+                    disabled={methods.formState.isSubmitting}
                   >
                     <MoneyIcon size={16} />
                     Dinheiro
@@ -225,7 +154,7 @@ export function CheckoutPage() {
               return (
                 <div key={coffee.id}>
                   <Card
-                    isLoading={isSubmitting}
+                    isLoading={methods.formState.isSubmitting}
                     quantity={coffee.quantity}
                     image={coffee.image}
                     title={coffee.title}
@@ -276,9 +205,13 @@ export function CheckoutPage() {
             <PrimaryButton
               type="submit"
               form="addressForm"
-              isLoading={isSubmitting}
+              isLoading={methods.formState.isSubmitting}
             >
-              {isSubmitting ? <SpinnerGapIcon size={16} /> : "Confirmar Pedido"}
+              {methods.formState.isSubmitting ? (
+                <SpinnerGapIcon size={16} />
+              ) : (
+                "Confirmar Pedido"
+              )}
             </PrimaryButton>
           )}
         </SelectedCoffeesContent>

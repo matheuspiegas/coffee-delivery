@@ -3,9 +3,17 @@ import styled, { css } from "styled-components";
 export const Container = styled.main`
   display: flex;
   align-items: center;
-  margin: 5rem auto 5rem auto;
+  /* margin: 5rem auto 5rem auto; */
   gap: 6.375rem;
   align-items: end;
+
+  @media (width < 1000px) {
+    padding-inline: 1rem;
+    display: block;
+    img {
+      display: none;
+    }
+  }
 `;
 
 export const HeadingContainer = styled.div`
